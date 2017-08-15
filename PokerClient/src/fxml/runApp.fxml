@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.runAppController">
+   <children>
+      <Pane prefHeight="480.0" prefWidth="720.0" style="-fx-background-color: #3f4042;">
+         <children>
+            <Pane layoutX="50.0" layoutY="50.0" prefHeight="350.0" prefWidth="600.0" style="-fx-background-color: #47494f; -fx-background-radius: 20;">
+               <children>
+                  <Label layoutX="233.0" layoutY="14.0" prefHeight="73.0" prefWidth="135.0" text="Welcome" textFill="WHITE">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="hostServerButton" layoutX="395.0" layoutY="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Host" />
+                  <Label layoutX="125.0" layoutY="87.0" prefHeight="84.0" prefWidth="351.0" text="Here you can host your own poker server or join an existing server by typing its IP-address below." textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="joinServerIPAddressTextfield" layoutX="233.0" layoutY="242.0" prefHeight="25.0" prefWidth="150.0" />
+                  <Button fx:id="joinServerButton" layoutX="395.0" layoutY="242.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Join" />
+                  <Label layoutX="135.0" layoutY="241.0" prefHeight="27.0" prefWidth="98.0" text="IP address:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="screenNameTextfield" layoutX="233.0" layoutY="195.0" prefHeight="25.0" prefWidth="150.0" />
+                  <Label layoutX="119.0" layoutY="194.0" prefHeight="27.0" prefWidth="111.0" text="Screen name:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="invalidNameLengthLabel" layoutX="228.0" layoutY="165.0" prefHeight="20.0" prefWidth="161.0" text="Invalid length. 3-20 chars" textFill="RED">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="joinServerErrorLabel" layoutX="234.0" layoutY="248.0" prefHeight="117.0" prefWidth="150.0" text="No server is hosted on this address. Please try again." textFill="RED" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
