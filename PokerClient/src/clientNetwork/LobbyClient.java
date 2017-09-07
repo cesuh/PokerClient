@@ -1,8 +1,6 @@
 package clientNetwork;
 
 import java.io.IOException;
-
-import controller.GameController;
 import controller.LobbyController;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +13,6 @@ public class LobbyClient extends Client implements Runnable {
 
 	private LobbyController lc;
 	private String name;
-	private GameController gc;
 	private FXMLLoader loader;
 	private Pane root;
 	private Scene scene;
@@ -32,7 +29,7 @@ public class LobbyClient extends Client implements Runnable {
 		stage.setScene(scene);
 		stage.sizeToScene();
 		stage.show();
-		letterbox(scene, root);
+		letterbox(scene, stage, root);
 		
 		lc = (LobbyController) loader.getController();
 		lc.setClient(this);

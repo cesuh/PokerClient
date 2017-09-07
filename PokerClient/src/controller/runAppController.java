@@ -13,31 +13,16 @@ import clientNetwork.LobbyClient;
 public class runAppController implements Initializable {
 
 	@FXML
-	private Button hostServerButton;
+	private Button loginButton;
 
 	@FXML
-	private Button joinServerButton;
+	private TextField passwordTextfield;
 
 	@FXML
-	private TextField joinServerIPAddressTextfield;
+	private TextField usernameTextfield;
 
 	@FXML
-	private TextField screenNameTextfield;
-
-	@FXML
-	private Label invalidNameLengthLabel;
-
-	@FXML
-	private Label joinServerErrorLabel;
-
-	private boolean validLength(String name) {
-		return name.length() >= 3 && name.length() <= 20;
-	}
-
-	private void hideErrors() {
-		invalidNameLengthLabel.setVisible(false);
-		joinServerErrorLabel.setVisible(false);
-	}
+	private Label loginErrorLabel;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -45,23 +30,20 @@ public class runAppController implements Initializable {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				screenNameTextfield.requestFocus();
+				usernameTextfield.requestFocus();
+				loginErrorLabel.setVisible(false);
 			}
 		});
 
-		hideErrors();
-
-		joinServerButton.setOnAction(actionEvent -> {
-			String screenName = screenNameTextfield.getText();
-			if (!joinServerIPAddressTextfield.getText().isEmpty() && validLength(screenName)) {
-				try {
-					String ip_address = joinServerIPAddressTextfield.getText();
-					LobbyClient lobbyClient = new LobbyClient(1100, ip_address, screenName);
-					new Thread(lobbyClient).start();
-					joinServerButton.getScene().getWindow().hide();
-				} catch (Exception e) {
-					System.out.println("Something went wrong trying to join the server");
-				}
+		loginButton.setOnAction(actionEvent -> {
+			String username = usernameTextfield.getText();
+			try {
+				String ip_address = "10.0.1.46";
+				LobbyClient lobbyClient = new LobbyClient(1100, ip_address, username);
+				new Thread(lobbyClient).start();
+				loginButton.getScene().getWindow().hide();
+			} catch (Exception e) {
+				System.out.println("Something went wrong trying to join the server");
 			}
 		});
 	}

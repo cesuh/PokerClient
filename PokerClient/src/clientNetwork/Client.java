@@ -9,6 +9,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.transform.Scale;
+import javafx.stage.Stage;
 
 public abstract class Client implements Runnable {
 
@@ -23,9 +24,9 @@ public abstract class Client implements Runnable {
 		socket = new Socket(IP_ADDRESS, portNumber);
 		in = new DataInputStream(socket.getInputStream());
 		out = new DataOutputStream(socket.getOutputStream());
-		
+
 	}
-	
+
 	public String getIPAddress() {
 		return IP_ADDRESS;
 	}
@@ -38,41 +39,46 @@ public abstract class Client implements Runnable {
 		}
 	}
 
-	protected void letterbox(final Scene scene, final Pane contentPane) {
+	protected void letterbox(final Scene scene, final Stage stage, final Pane contentPane) {
 
 		final double initWidth = scene.getWidth();
 		final double initHeight = scene.getHeight();
 		final double ratio = initWidth / initHeight;
 
-		SceneSizeChangeListener sizeListener = new SceneSizeChangeListener(scene, ratio, initHeight, initWidth,
+		SceneSizeChangeListener sizeListener = new SceneSizeChangeListener(scene, stage, ratio, initHeight, initWidth,
 				contentPane);
 		scene.widthProperty().addListener(sizeListener);
 		scene.heightProperty().addListener(sizeListener);
 	}
 
+
 	protected static class SceneSizeChangeListener implements ChangeListener<Number> {
+
 		private final Scene scene;
 		private final double ratio;
 		private final double initHeight;
 		private final double initWidth;
 		private final Pane contentPane;
+		private final Stage stage;
 
-		private SceneSizeChangeListener(Scene scene, double ratio, double initHeight, double initWidth,
+		private SceneSizeChangeListener(Scene scene, Stage stage, double ratio, double initHeight, double initWidth,
 				Pane contentPane) {
 			this.scene = scene;
 			this.ratio = ratio;
 			this.initHeight = initHeight;
 			this.initWidth = initWidth;
 			this.contentPane = contentPane;
+			this.stage = stage;
 		}
 
 		@Override
 		public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+
 			final double newWidth = scene.getWidth();
 			final double newHeight = scene.getHeight();
 
 			double scaleFactor = newWidth / newHeight > ratio ? newHeight / initHeight : newWidth / initWidth;
-
+			
 			if (scaleFactor >= 1) {
 				Scale scale = new Scale(scaleFactor, scaleFactor);
 				scale.setPivotX(0);

@@ -20,30 +20,90 @@ public class GameClient extends Client {
 
 	public GameClient(int portNumber, String IP_ADDRESS) throws IOException {
 		super(portNumber, IP_ADDRESS);
-
 		loader = new FXMLLoader(getClass().getResource("/fxml/Game.fxml"));
 		root = (Pane) loader.load();
-		scene = new Scene(new Group(root), 720, 500);
-
+		scene = new Scene(new Group(root), 720, 510);
 		stage = new Stage();
 		stage.setScene(scene);
 		stage.sizeToScene();
-		stage.setMinWidth(736);
-		stage.setMinHeight(538);
+		stage.setMinWidth(720);
+		stage.setMinHeight(510);
 		stage.show();
-
-		letterbox(scene, root);
+		letterbox(scene, stage, root);
 		gc = (GameController) loader.getController();
 		gc.setClient(this);
-
+		scene.getStylesheets().add(getClass().getResource("/fxml/theme1.css").toExternalForm());
 	}
 
-	private boolean checkCard(int rank, int suit) {
+	public final void changeToTheme1() {
+		scene.getStylesheets().clear();
+		scene.getStylesheets().add(getClass().getResource("/fxml/theme1.css").toExternalForm());
+	}
+
+	public final void changeToTheme2() {
+		scene.getStylesheets().clear();
+		scene.getStylesheets().add(getClass().getResource("/fxml/theme2.css").toExternalForm());
+	}
+
+	public final void changeToTheme3() {
+		scene.getStylesheets().clear();
+		scene.getStylesheets().add(getClass().getResource("/fxml/theme3.css").toExternalForm());
+	}
+
+	private boolean validateCard(int suit, int rank) {
 		return rank >= 2 && rank <= 14 && suit >= 1 & suit <= 4;
 	}
 
-	private boolean checkPos(int pos) {
+	private boolean checkTablePos(int pos) {
 		return pos >= 0 && pos <= 5;
+	}
+
+	private int[] validateCardInfo(String suit, String rank) {
+		int[] cardInfo = new int[2];
+
+		try {
+			cardInfo[0] = Integer.parseInt(suit);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Left suit rank index out of bounds. Message = " + suit);
+		} catch (NumberFormatException e) {
+			System.out.println("Left suit rank unexpected type, expected int. Message = " + suit);
+		}
+
+		try {
+			cardInfo[1] = Integer.parseInt(rank);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Left card suit index out of bounds. Message = " + rank);
+		} catch (NumberFormatException e) {
+			System.out.println("Left card suit unexpected type, expected int. Message = " + rank);
+		}
+
+		if (validateCard(cardInfo[0], cardInfo[1]))
+			return cardInfo;
+		return null;
+	}
+
+	private final int validateTablePos(String tablePos) {
+		int tablePosition = -1;
+		try {
+			tablePosition = Integer.parseInt(tablePos);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("TablePos out of bounds. Message = " + tablePos);
+		} catch (NumberFormatException e) {
+			System.out.println("TablePos unexpected type, expected int. Message = " + tablePos);
+		}
+		return tablePosition;
+	}
+
+	private final int validateChips(String msg) {
+		int chips = -1;
+		try {
+			chips = Integer.parseInt(msg);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("TablePos out of bounds. Message = " + msg);
+		} catch (NumberFormatException e) {
+			System.out.println("TablePos unexpected type, expected int. Message = " + msg);
+		}
+		return chips;
 	}
 
 	@Override
@@ -55,7 +115,6 @@ public class GameClient extends Client {
 				message = in.readUTF();
 			} catch (IOException e) {
 				this.in = null;
-				System.out.println("Server closed from game client");
 			}
 
 			if (message != null) {
@@ -64,39 +123,20 @@ public class GameClient extends Client {
 
 				if (words[0].equals("FOLD")) {
 					Platform.runLater(() -> {
-
-						int tablePos = -1;
-
-						try {
-							tablePos = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Fold tablePos out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Fold tablePos unexpected type, expected int. Message = " + msg);
-						}
-
-						if (checkPos(tablePos)) {
+						int tablePos = validateTablePos(words[1]);
+						if (checkTablePos(tablePos)) {
 							gc.removePlayerCards(tablePos);
-							gc.finishTurn(tablePos);
+							gc.endTurn(tablePos);
+							if (gc.getSound())
+								gc.playFoldCardsAudio();
 						}
 					});
 				}
 
 				else if (words[0].equals("CHANGEPLAYERBOXCOLOR")) {
 					Platform.runLater(() -> {
-
-						int tablePos = -1;
-
-						try {
-							tablePos = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Change player box color tablePos out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println(
-									"Change player box color tablePos unexpected type, expected int. Message = " + msg);
-						}
-
-						if (checkPos(tablePos)) {
+						int tablePos = validateTablePos(words[1]);
+						if (checkTablePos(tablePos)) {
 							gc.changePlayerBoxColor(tablePos);
 						}
 					});
@@ -104,91 +144,50 @@ public class GameClient extends Client {
 
 				else if (words[0].equals("CHECK")) {
 					Platform.runLater(() -> {
-
-						int tablePos = -1;
-
-						try {
-							tablePos = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Check tablePos out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Check tablePos unexpected type, expected int. Message = " + msg);
-						}
-
-						if (checkPos(tablePos)) {
-							gc.finishTurn(tablePos);
+						int tablePos = validateTablePos(words[1]);
+						if (checkTablePos(tablePos)) {
+							gc.endTurn(tablePos);
+							if (gc.getSound())
+								gc.playCheckAudio();
 						}
 					});
 				}
 
 				else if (words[0].equals("UPDATEPOTSIZE")) {
 					Platform.runLater(() -> {
-
-						int potSize = -1;
-
-						try {
-							potSize = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Update potSize out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Update potSize unexpected type, expected int. Message = " + msg);
-						}
-
-						if (potSize >= 0) {
+						int potSize = validateChips(words[1]);
+						if (potSize > 0) {
 							gc.setPotSize(potSize);
 						}
 					});
 				}
 
-				else if (words[0].equals("BET"))
+				else if (words[0].equals("BET") || words[0].equals("CALL"))
 					Platform.runLater(() -> {
 
 						int tablePos = -1;
 						int bet = -1;
 						int stack = -1;
 
-						try {
-							tablePos = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Bet tablePos index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Bet tablePos unexpected type, expected int. Message = " + msg);
-						}
+						tablePos = validateTablePos(words[1]);
+						bet = validateChips(words[2]);
+						stack = validateChips(words[3]);
 
-						try {
-							bet = Integer.parseInt(words[2]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Bet size index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Bet size unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							stack = Integer.parseInt(words[3]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("stack size index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Bet stack unexpected type, expected int. Message = " + msg);
-						}
-
-						if (checkPos(tablePos) && bet >= 0 && stack >= 0) {
+						if (checkTablePos(tablePos) && bet > 0 && stack >= 0) {
 							gc.bet(tablePos, bet, stack);
-							gc.finishTurn(tablePos);
+							gc.endTurn(tablePos);
+							if (gc.getSound())
+								if (words[0].equals("BET"))
+									gc.playBetAudio();
+								else
+									gc.playCallChipsAudio();
 						}
 					});
 
 				else if (words[0].equals("POTSIZE"))
 					Platform.runLater(() -> {
 
-						int potSize = -1;
-
-						try {
-							potSize = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Pot size index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Pot size unexpected type, expected int. Message = " + msg);
-						}
+						int potSize = validateChips(words[1]);
 
 						if (potSize >= 0)
 							gc.setPotSize(potSize);
@@ -198,24 +197,15 @@ public class GameClient extends Client {
 
 					Platform.runLater(() -> {
 
-						int tablePos = -1;
+						int tablePos = validateTablePos(words[1]);
 						String name = null;
-
-						try {
-							tablePos = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Set name index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Set name tablePos unexpected type, expected int. Message = " + msg);
-						}
 
 						try {
 							name = words[2];
 						} catch (ArrayIndexOutOfBoundsException e) {
 							System.out.println("Set name index out of bounds. Message = " + msg);
 						}
-
-						if (checkPos(tablePos) && name != null)
+						if (checkTablePos(tablePos) && name != null)
 							gc.setPlayerName(tablePos, name);
 					});
 
@@ -223,386 +213,105 @@ public class GameClient extends Client {
 
 				else if (words[0].equals("DEALER"))
 					Platform.runLater(() -> {
-
-						int tablePos = -1;
-
-						try {
-							tablePos = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Set deal button index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Set dealer tablePos unexpected type, expected int. Message = " + msg);
-						}
-
-						if (checkPos(tablePos))
+						int tablePos = validateTablePos(words[1]);
+						if (checkTablePos(tablePos))
 							gc.setDealer(tablePos);
 					});
 
 				else if (words[0].equals("PLAYERSTACK"))
 					Platform.runLater(() -> {
 
-						int tablePos = -1;
-						int playerStack = -1;
+						int tablePos = validateTablePos(words[1]);
+						int playerStack = validateChips(words[2]);
 
-						try {
-							tablePos = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Set name index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println(
-									"Set playerstack tablePos unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							playerStack = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Player stack index out of bounds. Message = " + msg);
-						}
-
-						if (checkPos(tablePos) && playerStack >= 0)
+						if (checkTablePos(tablePos) && playerStack >= 0)
 							gc.setPlayerStack(tablePos, words[2]);
 					});
 
 				else if (words[0].equals("DISPLAYBUTTONS"))
 					Platform.runLater(() -> {
-
-						int bet = -1;
-						int currentBet = -1;
-						int bigBlindValue = -1;
-						int playerStack = -1;
-
-						try {
-							bet = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("display buttons bet size index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println(
-									"Display buttons bet size unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							currentBet = Integer.parseInt(words[2]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Current bet size index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Current bet size unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							bigBlindValue = Integer.parseInt(words[3]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Bigblind value index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Big blind value unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							playerStack = Integer.parseInt(words[4]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Player stack index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Player stack unexpected type, expected int. Message = " + msg);
-						}
-
-						if (bet >= 0 && currentBet >= 0 && bigBlindValue >= 0 && playerStack >= 0)
+						int bet = validateChips(words[1]);
+						int currentBet = validateChips(words[2]);
+						int bigBlindValue = validateChips(words[3]);
+						int playerStack = validateChips(words[4]);
+						if (bet >= 0 && currentBet >= 0 && bigBlindValue >= 0 && playerStack >= 0) {
 							gc.displayButtons(bet, currentBet, bigBlindValue, playerStack);
+						}
 					});
 
 				else if (words[0].equals("UNDECIDED"))
 					Platform.runLater(() -> {
-
-						int tablePos = -1;
-
-						try {
-							tablePos = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Undecided tablePos index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Undecided tablePos unexpected type, expected int. Message = " + msg);
-						}
-
-						if (checkPos(tablePos))
+						int tablePos = validateTablePos(words[1]);
+						if (checkTablePos(tablePos))
 							gc.changePlayerBoxColor(tablePos);
 					});
 
 				else if (words[0].equals("PROGRESSBAR"))
 					Platform.runLater(() -> {
-
-						int tablePos = -1;
-
-						try {
-							tablePos = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("progressBar tablePos index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("progressBar tablePos unexpected type, expected int. Message = " + msg);
-						}
-
-						if (checkPos(tablePos))
+						int tablePos = validateTablePos(words[1]);
+						if (checkTablePos(tablePos))
 							gc.decrementProgress(tablePos);
 					});
 
 				else if (words[0].equals("SHOWPROGRESSBAR"))
 					Platform.runLater(() -> {
-
-						int tablePos = -1;
-
-						try {
-							tablePos = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Show progressBar tablePos index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println(
-									"Show progressBar tablePos unexpected type, expected int. Message = " + msg);
-						}
-
-						if (checkPos(tablePos))
+						int tablePos = validateTablePos(words[1]);
+						if (checkTablePos(tablePos))
 							gc.showProgressBar(tablePos);
 					});
 				else if (words[0].equals("DEALCARDS"))
 					Platform.runLater(() -> {
 
-						int tablePos = -1;
-						int leftRank = -1;
-						int leftSuit = -1;
-						int rightRank = -1;
-						int rightSuit = -1;
-						int remainingPlayers = -1;
+						int tablePos = validateTablePos(words[1]);
+						int[] leftCard = validateCardInfo(words[2], words[3]);
+						int[] rightCard = validateCardInfo(words[4], words[5]);
+						int remainingPlayers = validateTablePos(words[6]);
 
-						try {
-							tablePos = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Deal cards tablePos index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Deal cards tablePos unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							leftRank = Integer.parseInt(words[2]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Left card rank index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Left card rank unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							leftSuit = Integer.parseInt(words[3]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Left card suit index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Left card suit unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							rightRank = Integer.parseInt(words[4]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Right card rank index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Left card rank unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							rightSuit = Integer.parseInt(words[5]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("right card suit index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("right card suit unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							remainingPlayers = Integer.parseInt(words[6]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Remaining players index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Remaining players unexpected type, expected int. Message = " + msg);
-						}
-
-						if (checkPos(tablePos) && checkCard(leftRank, leftSuit) && checkCard(rightRank, rightSuit)
-								&& remainingPlayers >= 2) {
-							gc.setPlayerCards(tablePos, leftRank, leftSuit, rightRank, rightSuit);
+						if (checkTablePos(tablePos) && leftCard != null && rightCard != null && remainingPlayers >= 2) {
+							gc.setPlayerCards(tablePos, leftCard[0], leftCard[1], rightCard[0], rightCard[1]);
 							gc.setAllOpponentPlayerCards(tablePos, remainingPlayers);
 						}
 					});
 
 				else if (words[0].equals("SHOWDOWN"))
 					Platform.runLater(() -> {
-
-						int tablePos = -1;
-						int leftRank = -1;
-						int leftSuit = -1;
-						int rightRank = -1;
-						int rightSuit = -1;
-						int remainingPlayers = -1;
-
-						try {
-							tablePos = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Deal cards tablePos index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Deal cards tablePos unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							leftRank = Integer.parseInt(words[2]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Left card rank index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Left card rank unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							leftSuit = Integer.parseInt(words[3]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Left card suit index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Left card suit unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							rightRank = Integer.parseInt(words[4]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Right card rank index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Left card rank unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							rightSuit = Integer.parseInt(words[5]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("right card suit index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("right card suit unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							remainingPlayers = Integer.parseInt(words[6]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Remaining players index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Remaining players unexpected type, expected int. Message = " + msg);
-						}
-
-						if (checkPos(tablePos) && checkCard(leftRank, leftSuit) && checkCard(rightRank, rightSuit)
-								&& remainingPlayers >= 2) {
-							gc.setPlayerNoSound(tablePos, leftRank, leftSuit, rightRank, rightSuit);
+						int tablePos = validateTablePos(words[1]);
+						int[] leftCard = validateCardInfo(words[2], words[3]);
+						int[] rightCard = validateCardInfo(words[4], words[5]);
+						int remainingPlayers = validateTablePos(words[6]);
+						if (checkTablePos(tablePos) && leftCard != null && rightCard != null && remainingPlayers >= 2) {
+							gc.showDownCards(tablePos, leftCard[0], leftCard[1], rightCard[0], rightCard[1]);
 						}
 					});
 
 				else if (words[0].equals("DEALFLOP"))
 					Platform.runLater(() -> {
-
-						int card1Rank = -1;
-						int card1Suit = -1;
-						int card2Rank = -1;
-						int card2Suit = -1;
-						int card3Rank = -1;
-						int card3Suit = -1;
-
-						try {
-							card1Rank = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Card one rank index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Card one rank unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							card1Suit = Integer.parseInt(words[2]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Card one suit index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Card one suit unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							card2Rank = Integer.parseInt(words[3]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Card two rank index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Card two rank unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							card2Suit = Integer.parseInt(words[4]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Card two suit index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Card two suit unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							card3Rank = Integer.parseInt(words[5]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Card three index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Card three unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							card3Suit = Integer.parseInt(words[6]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Card three suit index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Card three suit unexpected type, expected int. Message = " + msg);
-						}
-
-						if (checkCard(card1Rank, card1Suit) && checkCard(card2Rank, card2Suit)
-								&& checkCard(card3Rank, card3Suit)) {
-							gc.setBoardCard(0, card1Rank, card1Suit);
-							gc.setBoardCard(1, card2Rank, card2Suit);
-							gc.setBoardCard(2, card3Rank, card3Suit);
+						int[] card1 = validateCardInfo(words[1], words[2]);
+						int[] card2 = validateCardInfo(words[3], words[4]);
+						int[] card3 = validateCardInfo(words[5], words[6]);
+						if (card1 != null && card2 != null && card3 != null) {
+							gc.setBoardCard(0, card1[0], card1[1]);
+							gc.setBoardCard(1, card2[0], card2[1]);
+							gc.setBoardCard(2, card3[0], card3[1]);
 						}
 					});
 
 				else if (words[0].equals("DEALTURN"))
 					Platform.runLater(() -> {
 
-						int card4Rank = -1;
-						int card4Suit = -1;
+						int[] turnCard = validateCardInfo(words[1], words[2]);
 
-						try {
-							card4Rank = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Card four rank index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Card four rank unexpected type, expected int. Message = " + msg);
-						}
-
-						try {
-							card4Suit = Integer.parseInt(words[2]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Card four suit index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Card four suit unexpected type, expected int. Message = " + msg);
-						}
-
-						if (checkCard(card4Rank, card4Suit))
-							gc.setBoardCard(3, card4Rank, card4Suit);
+						if (turnCard != null)
+							gc.setBoardCard(3, turnCard[0], turnCard[1]);
 					});
 
 				else if (words[0].equals("DEALRIVER"))
 					Platform.runLater(() -> {
-						int card5Rank = -1;
-						int card5Suit = -1;
 
-						try {
-							card5Rank = Integer.parseInt(words[1]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Card five rank index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Card five rank unexpected type, expected int. Message = " + msg);
-						}
+						int[] riverCard = validateCardInfo(words[1], words[2]);
 
-						try {
-							card5Suit = Integer.parseInt(words[2]);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							System.out.println("Card five suit index out of bounds. Message = " + msg);
-						} catch (NumberFormatException e) {
-							System.out.println("Card five suit unexpected type, expected int. Message = " + msg);
-						}
-
-						if (checkCard(card5Rank, card5Suit))
-							gc.setBoardCard(4, card5Rank, card5Suit);
+						if (riverCard != null)
+							gc.setBoardCard(4, riverCard[0], riverCard[1]);
 					});
 
 				else if (words[0].equals("CLEARBETS"))
@@ -620,9 +329,12 @@ public class GameClient extends Client {
 						gc.hideWaitingForPlayers();
 					});
 
-				else if (message.equals("CLEARBOARD"))
+				else if (message.equals("CLEARTABLE"))
 					Platform.runLater(() -> {
 						gc.clearBoard();
+						gc.clearPlayerBets();
+						gc.clearBestHand();
+						gc.clearAllHands();
 					});
 				else if (words[0].equals("SETBESTHAND")) {
 					String text = message.replaceAll("SETBESTHAND ", "");

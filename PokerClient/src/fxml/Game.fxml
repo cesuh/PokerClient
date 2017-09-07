@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.RadioButton?>
@@ -15,14 +16,13 @@
 <?import javafx.scene.effect.Lighting?>
 <?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="Background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="720.0" styleClass="Pane" stylesheets="@poker.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
+<Pane fx:id="Background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="720.0" styleClass="Pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
    <children>
       <Ellipse layoutX="362.0" layoutY="237.0" radiusX="233.0" radiusY="127.0" stroke="BLACK" strokeType="INSIDE">
          <effect>
@@ -36,7 +36,7 @@
             </Lighting>
          </effect>
       </Ellipse>
-      <Ellipse fx:id="Table" fill="#a3101de8" layoutX="360.0" layoutY="235.0" radiusX="228.0" radiusY="122.0" stroke="BLACK" strokeType="INSIDE">
+      <Ellipse fx:id="Table" fill="#a31010e8" layoutX="360.0" layoutY="235.0" radiusX="228.0" radiusY="122.0" stroke="BLACK" strokeType="INSIDE">
          <effect>
             <Lighting surfaceScale="10.0">
                <bumpInput>
@@ -48,24 +48,23 @@
             </Lighting>
          </effect>
       </Ellipse>
-      <Pane fx:id="betInputPanel" layoutX="558.0" layoutY="430.0" prefHeight="49.0" prefWidth="164.0">
+      <Pane fx:id="betInputPanel" layoutX="558.0" layoutY="438.0" prefHeight="60.0" prefWidth="158.0" styleClass="theme-slider">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="12.0" style="-fx-stroke: #732626; -fx-arc-height: 50; -fx-arc-width: 50; -fx-fill: #732626;" width="160.0" />
-            <Slider fx:id="slideBetAmount" layoutX="10.0" layoutY="33.0" prefHeight="18.0" prefWidth="140.0" />
-            <TextField fx:id="typeBetAmount" layoutX="12.0" layoutY="13.0" prefHeight="18.0" prefWidth="136.0">
+            <Slider fx:id="slideBetAmount" layoutX="10.0" layoutY="40.0" minHeight="-Infinity" prefHeight="15.0" prefWidth="140.0" />
+            <TextField fx:id="typeBetAmount" layoutX="12.0" layoutY="10.0" prefHeight="18.0" prefWidth="136.0" style="-: gray;">
                <font>
-                  <Font size="8.0" />
+                  <Font size="11.0" />
                </font>
             </TextField>
          </children>
       </Pane>
-      <Button fx:id="callButton" layoutX="365.0" layoutY="443.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="91.0" style="-fx-font-weight: bold;" styleClass="decisionbutton" text="Call" textFill="WHITE" />
-      <Button fx:id="raiseButton" layoutX="462.0" layoutY="443.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="91.0" style="-fx-font-weight: bold;" styleClass="decisionbutton" text="Raise to" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="callButton" layoutX="365.0" layoutY="455.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="91.0" style="-fx-font-weight: bold;" styleClass="theme" text="Call" textFill="WHITE" />
+      <Button fx:id="raiseButton" layoutX="462.0" layoutY="455.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="91.0" style="-fx-font-weight: bold;" styleClass="theme" text="Raise to" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Arial" size="12.0" />
          </font>
       </Button>
-    <Button fx:id="foldButton" layoutX="267.0" layoutY="443.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="91.0" style="-fx-font-weight: bold;" styleClass="decisionbutton" stylesheets="@poker.css" text="Fold" textFill="WHITE" />
+    <Button fx:id="foldButton" layoutX="267.0" layoutY="455.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="91.0" style="-fx-font-weight: bold;" styleClass="theme" text="Fold" textFill="WHITE" />
       <HBox layoutX="311.0" layoutY="291.0" prefHeight="56.0" prefWidth="90.0">
          <children>
             <ImageView fx:id="P1LeftCard" fitHeight="65.0" fitWidth="45.0">
@@ -76,21 +75,6 @@
             <ImageView fx:id="P1RightCard" fitHeight="65.0" fitWidth="45.0" />
          </children>
       </HBox>
-      <Pane layoutX="302.0" layoutY="71.0" prefHeight="42.0" prefWidth="112.0">
-         <children>
-            <Rectangle fx:id="P4Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff80" height="42.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 35; -fx-arc-width: 35;" width="112.0" />
-            <Label id="you" fx:id="P4Stack" alignment="CENTER" layoutX="4.0" layoutY="18.0" prefHeight="18.0" prefWidth="102.0">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Label>
-            <Label fx:id="P4Name" alignment="CENTER" layoutX="4.0" layoutY="4.0" prefHeight="18.0" prefWidth="102.0">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
       <HBox layoutX="242.0" layoutY="188.0" prefHeight="74.0" prefWidth="202.0" style="-fx-border-radius: 8;">
          <children>
             <ImageView fx:id="BoardCard1" fitHeight="72.0" fitWidth="45.0">
@@ -129,97 +113,111 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="BestHandText" alignment="CENTER" contentDisplay="CENTER" layoutX="576.0" layoutY="389.0" prefHeight="18.0" prefWidth="123.0" textFill="WHITE" />
-      <TabPane layoutY="396.0" prefHeight="103.0" prefWidth="260.0" style="-fx-background-color: rgb(151, 152, 153);" tabClosingPolicy="UNAVAILABLE">
+      <Label fx:id="bestHandText" alignment="CENTER" contentDisplay="CENTER" layoutX="576.0" layoutY="391.0" prefHeight="18.0" prefWidth="123.0" textFill="WHITE" />
+      <TabPane layoutY="380.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="260.0" styleClass="theme-panel" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab closable="false" text="Chat">
+          <Tab closable="false" style="-fx-font-weight: bold;" styleClass="theme" text="Chat">
                <content>
-                  <Pane prefHeight="29.0" prefWidth="252.0">
+                  <Pane prefHeight="29.0" prefWidth="249.0">
                      <children>
-                        <TextField fx:id="chatTextField" layoutY="56.0" prefHeight="23.0" prefWidth="201.0" styleClass="chatComponent">
+                        <TextField fx:id="chatTextField" layoutY="73.0" prefHeight="25.0" prefWidth="202.0" promptText="Type message here" styleClass="chatComponentInput">
                            <font>
-                              <Font size="10.0" />
+                              <Font size="12.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="sendChatButton" layoutX="200.0" layoutY="56.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="60.0" styleClass="chatComponent" text="Send">
+                        <Button fx:id="sendChatButton" layoutX="200.0" layoutY="72.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="61.0" styleClass="theme" text="Send">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </Button>
-                        <TextArea fx:id="chatTextArea" editable="false" prefHeight="58.0" prefWidth="260.0" styleClass="chatComponent" />
+                        <TextArea fx:id="chatTextArea" editable="false" layoutX="-1.0" layoutY="-2.0" minHeight="-Infinity" prefHeight="75.0" prefWidth="262.0" styleClass="chatComponentArea" wrapText="true">
+                           <font>
+                              <Font size="12.0" />
+                           </font></TextArea>
                      </children>
                   </Pane>
                </content>
             </Tab>
-          <Tab text="Hand history">
+          <Tab styleClass="theme" text="Hand history">
                <content>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                    </content>
-                  </ScrollPane>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0" />
                </content>
             </Tab>
-            <Tab text="Settings">
+            <Tab styleClass="theme" text="Settings">
                <content>
-                  <Pane prefHeight="79.0" prefWidth="232.0">
+                  <Pane prefHeight="81.0" prefWidth="260.0" styleClass="theme-panel">
                      <children>
-                        <Label layoutX="5.0" layoutY="6.0" prefHeight="17.0" prefWidth="57.0" text="Table color" textFill="WHITE">
+                        <Label layoutX="5.0" layoutY="-1.0" prefHeight="17.0" prefWidth="69.0" text="Table color" textFill="WHITE">
                            <font>
-                              <Font size="10.0" />
+                              <Font size="12.0" />
                            </font>
                         </Label>
-                        <Label layoutX="80.0" layoutY="7.0" prefHeight="15.0" prefWidth="56.0" text="Background" textFill="WHITE">
+                        <Label layoutX="100.0" layoutY="-1.0" prefHeight="17.0" prefWidth="69.0" text="Background" textFill="WHITE">
                            <font>
-                              <Font size="10.0" />
+                              <Font size="12.0" />
                            </font>
                         </Label>
-                        <Label layoutX="164.0" layoutY="7.0" prefHeight="15.0" prefWidth="61.0" text="Button color" textFill="WHITE">
+                        <RadioButton fx:id="TableBlack" layoutX="5.0" layoutY="16.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="57.0" text="Black" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="TableBlue" layoutX="5.0" layoutY="37.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="45.0" text="Blue" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="TableGreen" layoutX="5.0" layoutY="58.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="75.0" text="Green" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="BackgroundThree" layoutX="100.0" layoutY="58.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="17.0" prefWidth="50.0" text="Three" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="BackgroundTwo" layoutX="100.0" layoutY="37.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="17.0" prefWidth="45.0" text="Two" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="BackgroundOne" layoutX="100.0" layoutY="16.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="45.0" text="One" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </RadioButton>
+                        <Label layoutX="188.0" layoutY="1.0" prefHeight="17.0" prefWidth="69.0" text="Panel theme" textFill="WHITE">
+                           <font>
+                              <Font size="12.0" />
                            </font>
                         </Label>
-                        <RadioButton fx:id="TableGreen" layoutX="5.0" layoutY="21.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="57.0" text="Green" textAlignment="CENTER" textFill="#27ff01">
+                        <RadioButton fx:id="Theme1" layoutX="188.0" layoutY="18.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="45.0" text="One" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </RadioButton>
-                        <RadioButton fx:id="TableRed" layoutX="5.0" layoutY="40.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="75.0" text="Red" textFill="#ff0303">
+                        <RadioButton fx:id="Theme2" layoutX="188.0" layoutY="39.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="17.0" prefWidth="45.0" text="Two" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </RadioButton>
-                        <RadioButton fx:id="TableBlue" layoutX="5.0" layoutY="57.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="75.0" text="Blue" textFill="#051eff">
+                        <RadioButton fx:id="Theme3" layoutX="188.0" layoutY="60.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="17.0" prefWidth="50.0" text="Three" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </RadioButton>
-                        <RadioButton fx:id="BackgroundThree" layoutX="80.0" layoutY="57.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="45.0" text="Three" textAlignment="CENTER" textFill="WHITE">
+                        <CheckBox fx:id="soundCheckBox" layoutX="188.0" layoutY="81.0" mnemonicParsing="false" selected="true" text="Sound" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </CheckBox>
+                        <RadioButton fx:id="BackgroundFour" layoutX="100.0" layoutY="79.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="17.0" prefWidth="50.0" text="Four" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </RadioButton>
-                        <RadioButton fx:id="BackgroundTwo" layoutX="80.0" layoutY="40.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="38.0" text="Two" textAlignment="CENTER" textFill="WHITE">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton fx:id="BackgroundOne" layoutX="80.0" layoutY="21.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="45.0" text="One" textAlignment="CENTER" textFill="WHITE">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton fx:id="ButtonRed" layoutX="161.0" layoutY="57.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="45.0" text="Red" textFill="#ff0303">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton fx:id="ButtonGray" layoutX="161.0" layoutY="21.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="45.0" text="Gray">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton fx:id="ButtonBlack" layoutX="161.0" layoutY="41.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="45.0" text="Black">
+                        <RadioButton fx:id="TableRed" layoutX="5.0" layoutY="79.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="75.0" text="Red" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
@@ -230,94 +228,35 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Button fx:id="checkButton" layoutX="365.0" layoutY="443.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="91.0" style="-fx-font-weight: bold;" styleClass="decisionbutton" text="Check" textFill="WHITE" />
-      <Button fx:id="betButton" layoutX="462.0" layoutY="443.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="91.0" style="-fx-font-weight: bold;" styleClass="decisionbutton" text="Bet" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="checkButton" layoutX="365.0" layoutY="455.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="91.0" style="-fx-font-weight: bold;" styleClass="theme" text="Check" textAlignment="CENTER" textFill="WHITE" />
+      <Button fx:id="betButton" layoutX="462.0" layoutY="455.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="91.0" style="-fx-font-weight: bold;" styleClass="theme" text="Bet" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Arial" size="12.0" />
          </font>
       </Button>
-      <ProgressBar fx:id="progressBar" layoutX="307.0" layoutY="402.0" prefHeight="5.0" prefWidth="102.0" progress="1.0" styleClass="progressBar" />
+      <ProgressBar fx:id="progressBar" layoutX="295.0" layoutY="401.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="12.0" prefWidth="135.0" progress="1.0" styleClass="progressBar" />
       <Label fx:id="waitingForPlayersLabel" layoutX="248.0" layoutY="272.0" prefHeight="38.0" prefWidth="235.0" text="Waiting for players..." textFill="WHITE">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <Pane layoutX="302.0" layoutY="360.0" prefHeight="42.0" prefWidth="112.0">
+      <Pane layoutX="295.0" layoutY="362.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="135.0">
          <children>
-            <Rectangle fx:id="P1Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff80" height="42.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 35; -fx-arc-width: 35;" width="112.0" />
-            <Label id="you" fx:id="P1Stack" alignment="CENTER" layoutX="4.0" layoutY="18.0" prefHeight="18.0" prefWidth="102.0">
+            <Rectangle fx:id="P1Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff80" height="40.0" stroke="BLACK" strokeType="INSIDE" width="135.0" />
+            <Label id="you" fx:id="P1Stack" alignment="CENTER" layoutX="45.0" layoutY="20.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="\$3000">
                <font>
-                  <Font size="10.0" />
+                  <Font size="13.0" />
                </font>
             </Label>
-            <Label fx:id="P1Name" alignment="CENTER" layoutX="4.0" layoutY="4.0" prefHeight="18.0" prefWidth="102.0">
+            <Label fx:id="P1Name" alignment="CENTER" layoutX="45.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="Simon1992">
                <font>
-                  <Font size="10.0" />
+                  <Font size="14.0" />
                </font>
             </Label>
+            <ImageView fx:id="P1ProfilePic" fitHeight="38.0" fitWidth="45.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
       <ImageView fx:id="P1Dealer" fitHeight="22.0" fitWidth="27.0" layoutX="277.0" layoutY="312.0" pickOnBounds="true" preserveRatio="true" />
-      <Pane layoutX="73.0" layoutY="312.0" prefHeight="42.0" prefWidth="112.0">
-         <children>
-            <Rectangle fx:id="P2Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff80" height="42.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 35; -fx-arc-width: 35;" width="112.0" />
-            <Label id="you" fx:id="P2Stack" alignment="CENTER" layoutX="4.0" layoutY="18.0" prefHeight="18.0" prefWidth="102.0">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Label>
-            <Label fx:id="P2Name" alignment="CENTER" layoutX="4.0" layoutY="4.0" prefHeight="18.0" prefWidth="102.0">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Pane layoutX="73.0" layoutY="120.0" prefHeight="42.0" prefWidth="112.0">
-         <children>
-            <Rectangle fx:id="P3Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff80" height="42.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 35; -fx-arc-width: 35;" width="112.0" />
-            <Label id="you" fx:id="P3Stack" alignment="CENTER" layoutX="4.0" layoutY="18.0" prefHeight="18.0" prefWidth="102.0">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Label>
-            <Label fx:id="P3Name" alignment="CENTER" layoutX="4.0" layoutY="4.0" prefHeight="18.0" prefWidth="102.0">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Pane layoutX="539.0" layoutY="312.0" prefHeight="42.0" prefWidth="112.0">
-         <children>
-            <Rectangle fx:id="P6Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff80" height="42.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 35; -fx-arc-width: 35;" width="112.0" />
-            <Label id="you" fx:id="P6Stack" alignment="CENTER" layoutX="4.0" layoutY="18.0" prefHeight="18.0" prefWidth="102.0">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Label>
-            <Label fx:id="P6Name" alignment="CENTER" layoutX="4.0" layoutY="4.0" prefHeight="18.0" prefWidth="102.0">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Pane layoutX="539.0" layoutY="120.0" prefHeight="42.0" prefWidth="112.0">
-         <children>
-            <Rectangle fx:id="P5Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff80" height="42.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 35; -fx-arc-width: 35;" width="112.0" />
-            <Label id="you" fx:id="P5Stack" alignment="CENTER" layoutX="4.0" layoutY="18.0" prefHeight="18.0" prefWidth="102.0">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Label>
-            <Label fx:id="P5Name" alignment="CENTER" layoutX="4.0" layoutY="4.0" prefHeight="18.0" prefWidth="102.0">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
       <HBox layoutX="82.0" layoutY="246.0" prefHeight="56.0" prefWidth="90.0">
          <children>
             <ImageView fx:id="P2LeftCard" fitHeight="65.0" fitWidth="45.0">
@@ -373,7 +312,7 @@
       <ImageView fx:id="P4Dealer" fitHeight="22.0" fitWidth="27.0" layoutX="411.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="P5Dealer" fitHeight="22.0" fitWidth="27.0" layoutX="520.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="P6Dealer" fitHeight="22.0" fitWidth="27.0" layoutX="503.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="P2Bet" alignment="CENTER" layoutX="154.0" layoutY="264.0" prefHeight="21.0" prefWidth="76.0" textFill="WHITE">
+      <Label fx:id="P2Bet" alignment="CENTER" layoutX="186.0" layoutY="265.0" prefHeight="21.0" prefWidth="76.0" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -398,10 +337,90 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ProgressBar fx:id="progressBar1" layoutX="78.0" layoutY="355.0" prefHeight="5.0" prefWidth="102.0" progress="1.0" styleClass="progressBar" />
-      <ProgressBar fx:id="progressBar2" layoutX="78.0" layoutY="164.0" prefHeight="2.0" prefWidth="102.0" progress="1.0" styleClass="progressBar" />
-      <ProgressBar fx:id="progressBar3" layoutX="307.0" layoutY="119.0" prefHeight="5.0" prefWidth="102.0" progress="1.0" styleClass="progressBar" />
-      <ProgressBar fx:id="progressBar4" layoutX="546.0" layoutY="164.0" prefHeight="5.0" prefWidth="102.0" progress="1.0" styleClass="progressBar" />
-      <ProgressBar fx:id="progressBar5" layoutX="544.0" layoutY="355.0" prefHeight="5.0" prefWidth="102.0" progress="1.0" styleClass="progressBar" />
+      <ProgressBar fx:id="progressBar1" layoutX="62.0" layoutY="351.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="12.0" prefWidth="135.0" progress="1.0" styleClass="progressBar" />
+      <ProgressBar fx:id="progressBar2" layoutX="62.0" layoutY="158.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="12.0" prefWidth="135.0" progress="1.0" styleClass="progressBar" />
+      <ProgressBar fx:id="progressBar3" layoutX="292.0" layoutY="109.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="12.0" prefWidth="135.0" progress="1.0" styleClass="progressBar" />
+      <ProgressBar fx:id="progressBar4" layoutX="528.0" layoutY="158.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="12.0" prefWidth="135.0" progress="1.0" styleClass="progressBar" />
+      <ProgressBar fx:id="progressBar5" layoutX="528.0" layoutY="352.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="12.0" prefWidth="135.0" progress="1.0" styleClass="progressBar" />
+      <Pane layoutX="62.0" layoutY="313.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="135.0">
+         <children>
+            <Rectangle fx:id="P2Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff80" height="40.0" stroke="BLACK" strokeType="INSIDE" width="135.0" />
+            <Label id="you" fx:id="P2Stack" alignment="CENTER" layoutX="45.0" layoutY="20.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="\$3000">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="P2Name" alignment="CENTER" layoutX="45.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="Simon1992">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="P2ProfilePic" fitHeight="38.0" fitWidth="45.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+      <Pane layoutX="62.0" layoutY="119.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="135.0">
+         <children>
+            <Rectangle fx:id="P3Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff80" height="40.0" stroke="BLACK" strokeType="INSIDE" width="135.0" />
+            <Label id="you" fx:id="P3Stack" alignment="CENTER" layoutX="45.0" layoutY="20.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="\$3000">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="P3Name" alignment="CENTER" layoutX="45.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="Simon1992">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="P3ProfilePic" fitHeight="38.0" fitWidth="45.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+      <Pane layoutX="293.0" layoutY="70.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="135.0">
+         <children>
+            <Rectangle fx:id="P4Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff80" height="40.0" stroke="BLACK" strokeType="INSIDE" width="135.0" />
+            <Label id="you" fx:id="P4Stack" alignment="CENTER" layoutX="45.0" layoutY="20.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="\$3000">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="P4Name" alignment="CENTER" layoutX="45.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="Simon1992">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="P4ProfilePic" fitHeight="38.0" fitWidth="45.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+      <Pane layoutX="528.0" layoutY="119.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="135.0">
+         <children>
+            <Rectangle fx:id="P5Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff80" height="40.0" stroke="BLACK" strokeType="INSIDE" width="135.0" />
+            <Label id="you" fx:id="P5Stack" alignment="CENTER" layoutX="45.0" layoutY="20.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="\$3000">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="P5Name" alignment="CENTER" layoutX="45.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="Simon1992">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="P5ProfilePic" fitHeight="38.0" fitWidth="45.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+      <Pane layoutX="528.0" layoutY="313.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="135.0">
+         <children>
+            <Rectangle fx:id="P6Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffffff80" height="40.0" stroke="BLACK" strokeType="INSIDE" width="135.0" />
+            <Label id="you" fx:id="P6Stack" alignment="CENTER" layoutX="45.0" layoutY="20.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="\$3000">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="P6Name" alignment="CENTER" layoutX="45.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="90.0" text="Simon1992">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="P6ProfilePic" fitHeight="38.0" fitWidth="45.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
    </children>
 </Pane>

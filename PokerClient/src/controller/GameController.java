@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
@@ -27,7 +28,10 @@ import javafx.scene.layout.Background;
 public class GameController implements Initializable {
 
 	@FXML
-	private Pane Background;
+	private CheckBox soundCheckBox;
+
+	@FXML
+	private Pane Background, betInputPanel;
 
 	@FXML
 	private Slider slideBetAmount;
@@ -39,258 +43,74 @@ public class GameController implements Initializable {
 	private Ellipse Table;
 
 	@FXML
-	private Label P1Name;
+	private Label P1Name, P2Name, P3Name, P4Name, P5Name, P6Name;
 
 	@FXML
-	private Label P2Name;
+	private Label P1Stack, P2Stack, P3Stack, P4Stack, P5Stack, P6Stack;
 
 	@FXML
-	private Label P3Name;
+	private Rectangle P1Rectangle, P2Rectangle, P3Rectangle, P4Rectangle, P5Rectangle, P6Rectangle;
 
 	@FXML
-	private Label P4Name;
+	private Button callButton, raiseButton, foldButton, sendChatButton, checkButton, betButton;
 
 	@FXML
-	private Label P5Name;
+	private ImageView P1LeftCard, P2LeftCard, P3LeftCard, P4LeftCard, P5LeftCard, P6LeftCard;
 
 	@FXML
-	private Label P6Name;
+	private ImageView P1RightCard, P2RightCard, P3RightCard, P4RightCard, P5RightCard, P6RightCard;
 
 	@FXML
-	private Label P1Stack;
+	private ImageView BoardCard1, BoardCard2, BoardCard3, BoardCard4, BoardCard5;
 
 	@FXML
-	private Label P2Stack;
+	private ImageView P1ProfilePic, P2ProfilePic, P3ProfilePic, P4ProfilePic, P5ProfilePic, P6ProfilePic;
+	
+	@FXML
+	private ImageView P1Dealer, P2Dealer, P3Dealer, P4Dealer, P5Dealer, P6Dealer;
 
 	@FXML
-	private Label P3Stack;
+	private Label P1Bet, P2Bet, P3Bet, P4Bet, P5Bet, P6Bet;
 
 	@FXML
-	private Label P4Stack;
-
-	@FXML
-	private Label P5Stack;
-
-	@FXML
-	private Label P6Stack;
-
-	@FXML
-	private Rectangle P1Rectangle;
-
-	@FXML
-	private Rectangle P2Rectangle;
-
-	@FXML
-	private Rectangle P3Rectangle;
-
-	@FXML
-	private Rectangle P4Rectangle;
-
-	@FXML
-	private Rectangle P5Rectangle;
-
-	@FXML
-	private Rectangle P6Rectangle;
-
-	@FXML
-	private Button callButton;
-
-	@FXML
-	private Button raiseButton;
-
-	@FXML
-	private Button foldButton;
-
-	@FXML
-	private ImageView P1LeftCard;
-
-	@FXML
-	private ImageView P2LeftCard;
-
-	@FXML
-	private ImageView P3LeftCard;
-
-	@FXML
-	private ImageView P4LeftCard;
-
-	@FXML
-	private ImageView P5LeftCard;
-
-	@FXML
-	private ImageView P6LeftCard;
-
-	@FXML
-	private ImageView P1RightCard;
-
-	@FXML
-	private ImageView P2RightCard;
-
-	@FXML
-	private ImageView P3RightCard;
-
-	@FXML
-	private ImageView P4RightCard;
-
-	@FXML
-	private ImageView P5RightCard;
-
-	@FXML
-	private ImageView P6RightCard;
-
-	@FXML
-	private ImageView BoardCard1;
-
-	@FXML
-	private ImageView BoardCard2;
-
-	@FXML
-	private ImageView BoardCard3;
-
-	@FXML
-	private ImageView BoardCard4;
-
-	@FXML
-	private ImageView BoardCard5;
-
-	@FXML
-	private Label P1Bet;
-
-	@FXML
-	private Label P2Bet;
-
-	@FXML
-	private Label P3Bet;
-
-	@FXML
-	private Label P4Bet;
-
-	@FXML
-	private Label P5Bet;
-
-	@FXML
-	private Label P6Bet;
-
-	@FXML
-	private ImageView P1Dealer;
-
-	@FXML
-	private ImageView P2Dealer;
-
-	@FXML
-	private ImageView P3Dealer;
-
-	@FXML
-	private ImageView P4Dealer;
-
-	@FXML
-	private ImageView P5Dealer;
-
-	@FXML
-	private ImageView P6Dealer;
-
-	@FXML
-	private Label potSize;
-
-	@FXML
-	private Label BestHandText;
+	private Label potSize, bestHandText, waitingForPlayersLabel;
 
 	@FXML
 	private TextField chatTextField;
 
 	@FXML
-	private Button sendChatButton;
-
-	@FXML
 	private TextArea chatTextArea;
 
 	@FXML
-	private RadioButton TableGreen;
+	private RadioButton TableBlack, TableBlue, TableGreen, TableRed;
 
 	@FXML
-	private RadioButton TableRed;
+	private RadioButton BackgroundOne, BackgroundTwo, BackgroundThree, BackgroundFour;
+	
+    @FXML
+    private RadioButton Theme1, Theme2, Theme3;
 
 	@FXML
-	private RadioButton TableBlue;
+	private ProgressBar progressBar, progressBar1, progressBar2, progressBar3, progressBar4, progressBar5;
 
-	@FXML
-	private RadioButton BackgroundThree;
+	private BackgroundImage img1, img2, img3, img4;
 
-	@FXML
-	private RadioButton BackgroundTwo;
+	private boolean setColorHelper, sound = true;
 
-	@FXML
-	private RadioButton BackgroundOne;
-
-	@FXML
-	private RadioButton ButtonRed;
-
-	@FXML
-	private RadioButton ButtonGray;
-
-	@FXML
-	private RadioButton ButtonBlack;
-
-	@FXML
-	private Button checkButton;
-
-	@FXML
-	private Button betButton;
-
-	@FXML
-	private Pane betInputPanel;
-
-	@FXML
-	private ProgressBar progressBar;
-
-	@FXML
-	private ProgressBar progressBar1;
-
-	@FXML
-	private ProgressBar progressBar2;
-
-	@FXML
-	private ProgressBar progressBar3;
-
-	@FXML
-	private ProgressBar progressBar4;
-
-	@FXML
-	private ProgressBar progressBar5;
-
-	@FXML
-	private Label waitingForPlayersLabel;
-
-	private BackgroundImage img1;
-	private BackgroundImage img2;
-	private BackgroundImage img3;
-
-	private boolean setColorHelper = true;
-
-	private ArrayList<Label> playerNames;
+	private ArrayList<Label> playerNames, playerStacks, playerBets;
 
 	private ArrayList<ProgressBar> progressBars;
 
-	private ArrayList<Label> playerStacks;
-
-	private ArrayList<Label> playerBets;
-
-	private ArrayList<ImageView> leftCards;
-
-	private ArrayList<ImageView> rightCards;
-
-	private ArrayList<ImageView> dealerButtons;
-
-	private ArrayList<ImageView> boardCards;
+	private ArrayList<ImageView> leftCards, rightCards, dealerButtons, boardCards;
 
 	private ArrayList<Rectangle> playerBoxes;
 
-	private ToggleGroup tableColors;
-
-	private ToggleGroup buttonColors;
-
-	private ToggleGroup backgrounds;
+	private ToggleGroup tableColors, backgrounds, themes;
 
 	private GameClient client;
+
+	private AudioClip dealCardsAudio, foldCardsAudio, betChipsAudio, winChipsAudio, callChipsAudio, halfTimeAlarm,
+			checkAudio;
 
 	private String toStringCard(int suit, int rank) {
 		if (suit == 1)
@@ -357,17 +177,20 @@ public class GameController implements Initializable {
 		this.playerStacks.get(tablePos).setText("$" + value);
 	}
 
-	public void setPlayerCards(int tablePos, int leftRank, int leftSuit, int rightRank, int rightSuit) {
+	public void setPlayerCards(int tablePos, int leftSuit, int leftRank, int rightSuit, int rightRank) {
 		Image leftImage = new Image(("pictures/cards/" + toStringCard(leftSuit, leftRank) + ".png"), 200, 100, true,
 				true);
 		Image rightImage = new Image(("pictures/cards/" + toStringCard(rightSuit, rightRank) + ".png"), 200, 100, true,
 				true);
 		leftCards.get(tablePos).setImage(leftImage);
 		rightCards.get(tablePos).setImage(rightImage);
-		dealCardsAudio.play();
+
+		if (sound) {
+			dealCardsAudio.play();
+		}
 	}
 
-	public void setPlayerNoSound(int tablePos, int leftRank, int leftSuit, int rightRank, int rightSuit) {
+	public void showDownCards(int tablePos, int leftSuit, int leftRank, int rightSuit, int rightRank) {
 		Image leftImage = new Image(("pictures/cards/" + toStringCard(leftSuit, leftRank) + ".png"), 200, 100, true,
 				true);
 		Image rightImage = new Image(("pictures/cards/" + toStringCard(rightSuit, rightRank) + ".png"), 200, 100, true,
@@ -402,7 +225,7 @@ public class GameController implements Initializable {
 	}
 
 	public void setBestHand(String text) {
-		BestHandText.setText(text);
+		bestHandText.setText(text);
 	}
 
 	public void clearBoard() {
@@ -413,7 +236,7 @@ public class GameController implements Initializable {
 		BoardCard5.setImage(null);
 	}
 
-	public void setBoardCard(int boardPos, int rank, int suit) {
+	public void setBoardCard(int boardPos, int suit, int rank) {
 		Image image = new Image(("pictures/cards/" + toStringCard(suit, rank) + ".png"), 200, 100, true, true);
 		boardCards.get(boardPos).setImage(image);
 	}
@@ -485,30 +308,71 @@ public class GameController implements Initializable {
 			chatTextArea.setText(text);
 	}
 
-	public void finishTurn(int tablePos) {
+	public void endTurn(int tablePos) {
 		setOriginalPlayerBoxColor(tablePos);
 		hideProgressBar(tablePos);
 	}
 
 	public void clearBestHand() {
-		BestHandText.setText("");
+		bestHandText.setText("");
 	}
 
 	public void decrementProgress(int tablePos) {
 		ProgressBar pb = progressBars.get(tablePos);
-		pb.setProgress(pb.getProgress() - 0.004);
+		pb.setProgress(pb.getProgress() - 0.006);
 		if (progressBars.get(tablePos).getProgress() <= 0) {
 			client.sendMessage("FOLD");
 			hideButtons();
 		}
 	}
 
-	private AudioClip dealCardsAudio;
+	public void clearAllHands() {
+		for (int i = 0; i < 6; i++)
+			removePlayerCards(i);
+	}
+
+	public void playDealCardsAudio() {
+		dealCardsAudio.play();
+	}
+
+	public void playFoldCardsAudio() {
+		foldCardsAudio.play();
+	}
+
+	public void playBetAudio() {
+		betChipsAudio.play();
+	}
+
+	public void playWinChipsAudio() {
+		winChipsAudio.play();
+	}
+
+	public void playCallChipsAudio() {
+		callChipsAudio.play();
+	}
+
+	public void playHalfTimeAlarm() {
+		halfTimeAlarm.play();
+	}
+
+	public void playCheckAudio() {
+		checkAudio.play();
+	}
+
+	public final boolean getSound() {
+		return sound;
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
-		dealCardsAudio = new AudioClip(this.getClass().getResource("/soundEffects/cardPlace.wav").toExternalForm());
+		dealCardsAudio = new AudioClip(this.getClass().getResource("/soundEffects/cardPlace.mp3").toExternalForm());
+		foldCardsAudio = new AudioClip(this.getClass().getResource("/soundEffects/foldCards.wav").toExternalForm());
+		betChipsAudio = new AudioClip(this.getClass().getResource("/soundEffects/BetChips.wav").toExternalForm());
+		winChipsAudio = new AudioClip(this.getClass().getResource("/soundEffects/WinChips.wav").toExternalForm());
+		callChipsAudio = new AudioClip(this.getClass().getResource("/soundEffects/CallChips.wav").toExternalForm());
+		halfTimeAlarm = new AudioClip(this.getClass().getResource("/soundEffects/HalfTimeAlarm.wav").toExternalForm());
+		checkAudio = new AudioClip(this.getClass().getResource("/soundEffects/Check.wav").toExternalForm());
 
 		playerNames = new ArrayList<Label>();
 		playerNames.add(P1Name);
@@ -519,6 +383,7 @@ public class GameController implements Initializable {
 		playerNames.add(P6Name);
 		for (Label name : playerNames)
 			name.setText("Empty seat");
+
 		playerStacks = new ArrayList<Label>();
 		playerStacks.add(P1Stack);
 		playerStacks.add(P2Stack);
@@ -526,6 +391,7 @@ public class GameController implements Initializable {
 		playerStacks.add(P4Stack);
 		playerStacks.add(P5Stack);
 		playerStacks.add(P6Stack);
+
 		leftCards = new ArrayList<ImageView>();
 		leftCards.add(P1LeftCard);
 		leftCards.add(P2LeftCard);
@@ -533,6 +399,7 @@ public class GameController implements Initializable {
 		leftCards.add(P4LeftCard);
 		leftCards.add(P5LeftCard);
 		leftCards.add(P6LeftCard);
+
 		rightCards = new ArrayList<ImageView>();
 		rightCards.add(P1RightCard);
 		rightCards.add(P2RightCard);
@@ -540,6 +407,7 @@ public class GameController implements Initializable {
 		rightCards.add(P4RightCard);
 		rightCards.add(P5RightCard);
 		rightCards.add(P6RightCard);
+
 		playerBets = new ArrayList<Label>();
 		playerBets.add(P1Bet);
 		playerBets.add(P2Bet);
@@ -547,6 +415,7 @@ public class GameController implements Initializable {
 		playerBets.add(P4Bet);
 		playerBets.add(P5Bet);
 		playerBets.add(P6Bet);
+
 		dealerButtons = new ArrayList<ImageView>();
 		dealerButtons.add(P1Dealer);
 		dealerButtons.add(P2Dealer);
@@ -554,6 +423,7 @@ public class GameController implements Initializable {
 		dealerButtons.add(P4Dealer);
 		dealerButtons.add(P5Dealer);
 		dealerButtons.add(P6Dealer);
+
 		playerBoxes = new ArrayList<Rectangle>();
 		playerBoxes.add(P1Rectangle);
 		playerBoxes.add(P2Rectangle);
@@ -561,6 +431,7 @@ public class GameController implements Initializable {
 		playerBoxes.add(P4Rectangle);
 		playerBoxes.add(P5Rectangle);
 		playerBoxes.add(P6Rectangle);
+
 		progressBars = new ArrayList<ProgressBar>();
 		progressBars.add(progressBar);
 		progressBars.add(progressBar1);
@@ -568,33 +439,43 @@ public class GameController implements Initializable {
 		progressBars.add(progressBar3);
 		progressBars.add(progressBar4);
 		progressBars.add(progressBar5);
+
 		boardCards = new ArrayList<ImageView>();
 		boardCards.add(BoardCard1);
 		boardCards.add(BoardCard2);
 		boardCards.add(BoardCard3);
 		boardCards.add(BoardCard4);
 		boardCards.add(BoardCard5);
-		slideBetAmount.setMin(30);
-		slideBetAmount.setMax(3000);
-		slideBetAmount.setShowTickMarks(true);
-		slideBetAmount.setMajorTickUnit(500);
-		slideBetAmount.setMinorTickCount(0);
+
 		tableColors = new ToggleGroup();
 		TableGreen.setToggleGroup(tableColors);
 		TableRed.setToggleGroup(tableColors);
 		TableBlue.setToggleGroup(tableColors);
-		buttonColors = new ToggleGroup();
-		ButtonRed.setToggleGroup(buttonColors);
-		ButtonGray.setToggleGroup(buttonColors);
-		ButtonBlack.setToggleGroup(buttonColors);
+		TableBlack.setToggleGroup(tableColors);
+		tableColors.selectToggle(TableBlack);
+
 		backgrounds = new ToggleGroup();
 		BackgroundOne.setToggleGroup(backgrounds);
 		BackgroundTwo.setToggleGroup(backgrounds);
 		BackgroundThree.setToggleGroup(backgrounds);
-		img1 = new BackgroundImage(new Image("pictures/backgrounds/Pane.jpg"), null, null, null, null);
-		img2 = new BackgroundImage(new Image("pictures/backgrounds/Pane2.jpg"), null, null, null, null);
-		img3 = new BackgroundImage(new Image("pictures/backgrounds/Pane3.jpg"), null, null, null, null);
+		BackgroundFour.setToggleGroup(backgrounds);
+		backgrounds.selectToggle(BackgroundOne);
+		
+		themes = new ToggleGroup();
+		Theme1.setToggleGroup(themes);
+		Theme2.setToggleGroup(themes);
+		Theme3.setToggleGroup(themes);
+		themes.selectToggle(Theme1);
+
+		img1 = new BackgroundImage(new Image("pictures/backgrounds/black.jpg"), null, null, null, null);
+		img2 = new BackgroundImage(new Image("pictures/backgrounds/Red-Carpet.jpg"), null, null, null, null);
+		img3 = new BackgroundImage(new Image("pictures/backgrounds/black-on.jpg"), null, null, null, null);
+		img4 = new BackgroundImage(new Image("pictures/backgrounds/Pane4.jpg"), null, null, null, null);
 		Background.setBackground(new Background(img1));
+		
+		P1ProfilePic.setImage(new Image("pictures/avatar1.png"));
+		P2ProfilePic.setImage(new Image("pictures/avatar2.png"));
+
 		hideButtons();
 
 		slideBetAmount.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -609,12 +490,16 @@ public class GameController implements Initializable {
 		TableRed.setOnAction(actionEvent -> {
 			Table.setFill(Paint.valueOf("#a31010e8"));
 		});
+		TableBlack.setOnAction(actionEvent -> {
+			Table.setFill(Paint.valueOf("#090a0c"));
+		});
 		TableGreen.setOnAction(actionEvent -> {
 			Table.setFill(Paint.valueOf("#12a410e8"));
 		});
 		TableBlue.setOnAction(actionEvent -> {
-			Table.setFill(Paint.valueOf("#060d6ee8"));
+			Table.setFill(Paint.valueOf("#013fbb"));
 		});
+		
 		BackgroundOne.setOnAction(actionEvent -> {
 			Background.setBackground(new Background(img1));
 		});
@@ -624,7 +509,22 @@ public class GameController implements Initializable {
 		BackgroundThree.setOnAction(actionEvent -> {
 			Background.setBackground(new Background(img3));
 		});
-
+		BackgroundFour.setOnAction(actionEvent -> {
+			Background.setBackground(new Background(img4));
+		});
+		
+		Theme1.setOnAction(actionEvent -> {
+			client.changeToTheme1();
+		});
+		
+		Theme2.setOnAction(actionEvent -> {
+			client.changeToTheme2();
+		});
+		
+		Theme3.setOnAction(actionEvent -> {
+			client.changeToTheme3();
+		});
+		
 		sendChatButton.setOnAction(actionEvent -> {
 			if (!chatTextField.getText().trim().isEmpty())
 				client.sendMessage("CHATMESSAGE " + chatTextField.getText());
@@ -656,6 +556,12 @@ public class GameController implements Initializable {
 			hideButtons();
 		});
 
+		soundCheckBox.setOnAction(actionEvent -> {
+			if (sound)
+				sound = false;
+			else
+				sound = true;
+		});
 		typeBetAmount.textProperty().addListener((observable, oldValue, newValue) -> {
 			try {
 				int bet = Integer.parseInt(newValue);

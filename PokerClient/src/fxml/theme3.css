@@ -1,0 +1,108 @@
+.chatComponentArea{
+    -fx-focus-color: black;
+    -fx-text-fill: #ff6d05;
+    -fx-font-size: 12px;
+    -fx-font-family: "Arial";
+}
+
+.chatComponentInput{
+    -fx-focus-color: black;
+}
+
+.progress-bar > .bar {
+    -fx-shadow-highlight-color: transparent;
+  -fx-accent:  #ed5300;
+    -fx-background-color: linear-gradient(
+        from 0px .20em to .20em 0px,
+        repeat,
+        -fx-accent 50%,
+        -fx-accent 75%,
+        derive(-fx-accent, 100%) 25%,
+        derive(-fx-accent, 60%) 50%
+    );
+}
+
+
+.tab-pane {
+    -fx-tab-min-height: 2em;
+
+    -fx-tab-max-height: 2em;
+}
+.tab .tab-label {
+    -fx-background-color: transparent;
+    -fx-alignment: CENTER;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+}
+
+.tab-down-button {
+-fx-padding: 0;
+}
+
+.tab-down-button .arrow {
+-fx-padding: 0;
+}
+
+.tab {
+    -fx-padding: 0 19 0 19;
+-fx-border-color: #090a0c;
+
+}
+
+.tab {
+    -fx-background-insets: 0.0;
+    -fx-background-radius: 0.0;
+    -fx-background-color: gray
+}
+.tab:selected {
+    -fx-background-color: black;
+}
+.tab:focused {
+    -fx-focus-color: transparent;
+}
+
+.tab-pane:top *.tab-header-area {
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em 0.166667em 0.0em 0.0em;
+
+}
+.tab:selected .focus-indicator {
+    -fx-focus-color: transparent;
+}
+
+
+
+
+
+
+.theme, .theme-slider {
+    -fx-background-color:   linear-gradient(#ea5100, #8c3000);
+    -fx-text-fill: black;
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-font-family: "Arial";
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-size: 12px;
+}
+
+
+.theme Text {
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
+}
+.theme:selected, .theme:hover{
+   -fx-background-color: 
+        #d66224;
+}
+.theme-panel{
+     -fx-background-color: 
+        #090a0c,
+        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%);
+}
+
+.text-area .content{
+     -fx-background-color: 
+        #090a0c,
+        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+        linear-gradient(#20262b, #191d22);
+  }
