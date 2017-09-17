@@ -1,44 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.BoxBlur?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.runAppController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="778.0" prefWidth="1128.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
-      <Pane prefHeight="480.0" prefWidth="720.0" style="-fx-background-color: #3f4042;">
+      <ImageView fitHeight="778.0" pickOnBounds="true" preserveRatio="true" styleClass="theme">
+         <image>
+            <Image url="@../pictures/backgrounds/black.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="usernameTextfield" layoutX="485.0" layoutY="535.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="390.0" layoutY="537.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="90.0" text="Username:" textAlignment="RIGHT" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="390.0" layoutY="587.0" prefHeight="27.0" prefWidth="82.0" text="Password:" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="registerButton" layoutX="642.0" layoutY="585.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="73.0" styleClass="theme" stylesheets="@loginScreen.css" text="Register">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="loginButton" layoutX="642.0" layoutY="535.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="31.0" prefWidth="60.0" styleClass="theme" stylesheets="@loginScreen.css" text="Login">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Label fx:id="loginLogo" layoutX="249.0" layoutY="91.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="621.0" text="Poker FX" textAlignment="CENTER" textFill="#ea5100" textOverrun="CLIP">
+         <font>
+            <Font size="160.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <effect>
+            <Reflection bottomOpacity="0.09" fraction="1.0" topOffset="1.0" topOpacity="0.25">
+               <input>
+                  <Lighting>
+                     <bumpInput>
+                        <BoxBlur iterations="2" />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </input>
+            </Reflection>
+         </effect></Label>
+      <PasswordField fx:id="passwordField" layoutX="485.0" layoutY="585.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="150.0" />
+      <Pane fx:id="header" minHeight="-Infinity" minWidth="-Infinity" opacity="0.6" prefHeight="35.0" prefWidth="1128.0" style="-fx-background-color: #ea5100;" styleClass="header">
          <children>
-            <Pane layoutX="50.0" layoutY="50.0" prefHeight="350.0" prefWidth="600.0" style="-fx-background-color: #47494f; -fx-background-radius: 20;">
-               <children>
-                  <Label layoutX="233.0" layoutY="14.0" prefHeight="73.0" prefWidth="135.0" text="Welcome" textFill="WHITE">
-                     <font>
-                        <Font size="32.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="loginButton" layoutX="395.0" layoutY="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Login" />
-                  <TextField fx:id="passwordTextfield" layoutX="233.0" layoutY="242.0" prefHeight="25.0" prefWidth="150.0" />
-                  <Label layoutX="135.0" layoutY="241.0" prefHeight="27.0" prefWidth="98.0" text="Password:" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="usernameTextfield" layoutX="233.0" layoutY="195.0" prefHeight="25.0" prefWidth="150.0" />
-                  <Label layoutX="135.0" layoutY="197.0" prefHeight="27.0" prefWidth="111.0" text="Username:" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="loginErrorLabel" layoutX="228.0" layoutY="165.0" prefHeight="20.0" prefWidth="161.0" text="Invalid length. 3-20 chars" textFill="RED">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
+            <Button fx:id="closeApplicationButton" cancelButton="true" layoutX="1088.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="34.0" prefWidth="40.0" styleClass="headerButton" stylesheets="@loginScreen.css" text="X">
+               <font>
+                  <Font name="Arial Bold" size="19.0" />
+               </font>
+            </Button>
+            <Button fx:id="minimizeButton" layoutX="1002.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="34.0" prefWidth="40.0" styleClass="headerButton" stylesheets="@loginScreen.css" text="-">
+               <font>
+                  <Font name="Arial Bold" size="19.0" />
+               </font>
+            </Button>
+            <Button fx:id="fullScreenButton" layoutX="1045.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="34.0" prefWidth="40.0" styleClass="headerButton" stylesheets="@loginScreen.css" text="|_|">
+               <font>
+                  <Font name="Arial Bold" size="19.0" />
+               </font>
+            </Button>
+            <Label layoutX="14.0" layoutY="3.0" prefHeight="30.0" prefWidth="157.0" text="Poker FX login">
+               <font>
+                  <Font name="Arial Black" size="19.0" />
+               </font>
+            </Label>
          </children>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Pane>
    </children>
 </AnchorPane>

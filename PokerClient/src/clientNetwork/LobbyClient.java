@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class LobbyClient extends Client implements Runnable {
 
@@ -18,25 +19,21 @@ public class LobbyClient extends Client implements Runnable {
 	private Scene scene;
 	private Stage stage;
 	
-	public LobbyClient(int portNumber, String IP_ADDRESS, String name) throws IOException {
-		super(portNumber, IP_ADDRESS);
+	public LobbyClient(String IP_ADDRESS, String name) throws IOException {
+		super(1100, IP_ADDRESS);
 		this.name = name;
-		
 		loader = new FXMLLoader(getClass().getResource("/fxml/Lobby.fxml"));
 		root = (Pane) loader.load();
-		scene = new Scene(new Group(root), 991, 655);
+		scene = new Scene(new Group(root));
 		stage = new Stage();
+		stage.initStyle(StageStyle.UNDECORATED);
 		stage.setScene(scene);
 		stage.sizeToScene();
 		stage.show();
-		letterbox(scene, stage, root);
-		
+		letterbox(scene, root);
 		lc = (LobbyController) loader.getController();
 		lc.setClient(this);
-		String welcomeText = lc.getWelcomeMessage();
-		String welcomeText2 = welcomeText.replace("NAME", name);
-		String welcomeText3 = welcomeText2.replace("IP ADDRESS", IP_ADDRESS);
-		lc.setWelcomeMessage(welcomeText3);
+		lc.setStage(stage);
 		lc.setPlayerName(name);
 	}
 
@@ -55,12 +52,11 @@ public class LobbyClient extends Client implements Runnable {
 			try {
 				message = in.readUTF();
 			} catch (Exception e) {
-				this.in = null;
 			}
 			if (message != null) {
 				String[] words = message.split(" ");
 				if (words[0].equals("ADDGAMETOLIST")) {
-					String gameInfo = "Name: " + words[1] + ", connected players: " + words[2] + "/" + words[3];
+					String gameInfo = "connected players: " + words[1] + "/" + words[2];
 					Platform.runLater(() -> {
 						lc.addGameToList(gameInfo);
 					});
@@ -69,9 +65,9 @@ public class LobbyClient extends Client implements Runnable {
 						try {
 							lc.startGame(Integer.parseInt(words[1]), IP_ADDRESS);
 						} catch (NumberFormatException e) {
-							e.printStackTrace();
+							System.out.println("FAILED");
 						} catch (IOException e) {
-							e.printStackTrace();
+							System.out.println("FAILED2");
 						}
 					});
 				}

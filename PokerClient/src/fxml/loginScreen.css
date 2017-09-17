@@ -1,0 +1,32 @@
+
+.theme{
+    -fx-background-color:   linear-gradient(#ea5100, #8c3000);
+    -fx-text-fill: black;
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-font-family: "Arial";
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-size: 14px;
+}
+
+
+.theme Text {
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
+}
+
+.theme:selected, .theme:hover{
+   -fx-background-color: 
+        #d66224;
+}
+
+.headerButton{
+-fx-background-color: #ea5100;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial";
+    -fx-font-size: 18px;
+}
+
+.headerButton:hover{
+   -fx-background-color: 
+        #f2f7ff;
+}

@@ -32,20 +32,21 @@ public abstract class Client implements Runnable {
 	}
 
 	public void sendMessage(String message) {
+		if(message != null)
 		try {
 			out.writeUTF(message);
 		} catch (IOException e) {
-			System.out.println("Failed to send message from client");
+			System.out.println("Failed to send message from client. " + e);
 		}
 	}
 
-	protected void letterbox(final Scene scene, final Stage stage, final Pane contentPane) {
+	protected void letterbox(final Scene scene, final Pane contentPane) {
 
 		final double initWidth = scene.getWidth();
 		final double initHeight = scene.getHeight();
 		final double ratio = initWidth / initHeight;
 
-		SceneSizeChangeListener sizeListener = new SceneSizeChangeListener(scene, stage, ratio, initHeight, initWidth,
+		SceneSizeChangeListener sizeListener = new SceneSizeChangeListener(scene, ratio, initHeight, initWidth,
 				contentPane);
 		scene.widthProperty().addListener(sizeListener);
 		scene.heightProperty().addListener(sizeListener);
@@ -59,16 +60,14 @@ public abstract class Client implements Runnable {
 		private final double initHeight;
 		private final double initWidth;
 		private final Pane contentPane;
-		private final Stage stage;
 
-		private SceneSizeChangeListener(Scene scene, Stage stage, double ratio, double initHeight, double initWidth,
+		private SceneSizeChangeListener(Scene scene, double ratio, double initHeight, double initWidth,
 				Pane contentPane) {
 			this.scene = scene;
 			this.ratio = ratio;
 			this.initHeight = initHeight;
 			this.initWidth = initWidth;
 			this.contentPane = contentPane;
-			this.stage = stage;
 		}
 
 		@Override
@@ -78,13 +77,12 @@ public abstract class Client implements Runnable {
 			final double newHeight = scene.getHeight();
 
 			double scaleFactor = newWidth / newHeight > ratio ? newHeight / initHeight : newWidth / initWidth;
-			
+	
 			if (scaleFactor >= 1) {
 				Scale scale = new Scale(scaleFactor, scaleFactor);
 				scale.setPivotX(0);
 				scale.setPivotY(0);
 				scene.getRoot().getTransforms().setAll(scale);
-
 				contentPane.setPrefWidth(newWidth / scaleFactor);
 				contentPane.setPrefHeight(newHeight / scaleFactor);
 			} else {

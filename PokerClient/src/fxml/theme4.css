@@ -1,10 +1,17 @@
-.chatComponent{
-    -fx-focus-color: white;
+.chatComponentArea{
+    -fx-focus-color: black;
+    -fx-text-fill: #ff6d05;
+    -fx-font-size: 12px;
+    -fx-font-family: "Arial";
+}
+
+.chatComponentInput{
+    -fx-focus-color: black;
 }
 
 .progress-bar > .bar {
     -fx-shadow-highlight-color: transparent;
-  -fx-accent:  #00c403;
+  -fx-accent:  #000030;
     -fx-background-color: linear-gradient(
         from 0px .20em to .20em 0px,
         repeat,
@@ -24,7 +31,9 @@
 .tab .tab-label {
     -fx-background-color: transparent;
     -fx-alignment: CENTER;
-    -fx-text-fill: #EBEAF0;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
 }
 
 .tab-down-button {
@@ -37,7 +46,7 @@
 
 .tab {
     -fx-padding: 0 19 0 19;
--fx-border-color: white;
+-fx-border-color: #090a0c;
 
 }
 
@@ -53,16 +62,10 @@
     -fx-focus-color: transparent;
 }
 
-
 .tab-pane:top *.tab-header-area {
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em 0.166667em 0.0em 0.0em;
 
-    -fx-background-color: 
-        #090a0c,
-        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
-        linear-gradient(#20262b, #191d22),
-        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
 }
 .tab:selected .focus-indicator {
     -fx-focus-color: transparent;
@@ -73,38 +76,13 @@
 
 
 
-
-
-
-
-
-.theme {
-    -fx-background-color: 
-        #090a0c,
-        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
-        linear-gradient(#20262b, #191d22),
-        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+.theme, .theme-slider {
+    -fx-background-color:   linear-gradient(#0a9b16, #005907);
+    -fx-text-fill: black;
     -fx-background-radius: 5,4,3,5;
     -fx-background-insets: 0,1,2,0;
-    -fx-text-fill: white;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
     -fx-font-family: "Arial";
-    -fx-text-fill: linear-gradient(white, #d0d0d0);
-    -fx-font-size: 12px;
-}
-
-.theme-slider {
-    -fx-background-color: 
-        #090a0c,
-        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
-        linear-gradient(#20262b, #191d22),
-        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
-    -fx-background-radius: 5,4,3,5;
-    -fx-background-insets: 0,1,2,0;
-    -fx-text-fill: white;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-    -fx-font-family: "Arial";
-    -fx-text-fill: linear-gradient(white, #d0d0d0);
     -fx-font-size: 12px;
 }
 
@@ -114,37 +92,45 @@
 }
 .theme:selected, .theme:hover, .headerButton:hover{
    -fx-background-color: 
-        #090a0c,
-        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%);
+        #42d151;
 }
 .theme-panel{
-   -fx-background-color: 
+     -fx-background-color: 
         #090a0c,
         linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%);
-        -fx-background-radius: 5,4,3,5;
-    -fx-background-insets: 0,1,2,0;
 }
 
 .theme-window{
-    -fx-fill: linear-gradient(#090a0c, #303842);
+    -fx-fill: linear-gradient(#0b9914b2, #005907b2);
     -fx-font-family: "Arial";
-    -fx-text-fill: white;
+    -fx-text-fill: #000030;
+    -fx-font-size: 14px;
 }
 
+.theme-image{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+-fx-padding: 10;
+-fx-background-color: firebrick;
+-fx-background-radius: 5;
+}
+
+.text-area .content{
+     -fx-background-color: 
+        white;
+        -fx-font-size: 12px;
+  }
+
+
 .headerButton{
--fx-background-color:  #090a0c;
+-fx-background-color: #0a9b16;
     -fx-text-fill: white;
     -fx-font-family: "Arial";
     -fx-font-size: 15px;
 }
 
-.headerButton:hover{
-   -fx-background-color: 
-      #090a0c;
-}
-
 .header{
-  -fx-background-color:  #090a0c;
+   -fx-background-color: 
+        #0a9b16;
 }
 
 
